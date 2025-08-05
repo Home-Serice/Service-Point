@@ -1,0 +1,17 @@
+
+
+.app-container {
+    padding-top: 2%;
+    max-width: 100%;
+}
+
+/* Desktop styles */
+@media (min-width: 1000px) {
+
+    .app-container {
+        padding-left: 30%;
+        padding-right: 30%;
+        max-width: 100%;
+    } 
+}
+
