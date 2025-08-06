@@ -1,12 +1,44 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis } from 'recharts';
 import { useNavigate } from "react-router-dom";
 
 const ProviderProfile = () => {
-  // Sample data for the chart
-
   const navigate = useNavigate();
+  
+  // Add availability state
+  const [availabilityStatus, setAvailabilityStatus] = useState("scheduled"); 
+  const [availabilityRange, setAvailabilityRange] = useState({
+    from: "2025-10-12",
+    to: "2025-12-12"
+  });
+  
+  // Get status color and text based on availability
+  const getStatusInfo = () => {
+    switch(availabilityStatus) {
+      case "available":
+        return {
+          color: "bg-green-500",
+          textColor: "text-green-600",
+          text: "Available Now"
+        };
+      case "scheduled":
+        return {
+          color: "bg-yellow-500",
+          textColor: "text-yellow-600",
+          text: "Available on Schedule"
+        };
+      default:
+        return {
+          color: "bg-red-500",
+          textColor: "text-red-600",
+          text: "Not Available"
+        };
+    }
+  };
 
+  const statusInfo = getStatusInfo();
+  
+  // Sample data for the chart
   const chartData = [
     { name: 'Jan', value: 40 },
     { name: 'Feb', value: 30 },
@@ -26,24 +58,71 @@ const ProviderProfile = () => {
     { stars: 1, percentage: 2 },
   ];
 
+  // For demo purposes: toggle availability status when clicking on status indicator
+  const toggleAvailabilityStatus = () => {
+    setAvailabilityStatus(current => {
+      if (current === "available") return "scheduled";
+      if (current === "scheduled") return "unavailable";
+      return "available";
+    });
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-white pb-16">
       <div className="text-center pt-4 pb-2 border-b">
-        <h1 className="text-center text-2xl font-bold mb-9">Provider Profile</h1>
+        <h1 className="text-center text-2xl font-bold mb-9">
+          Provider Profile
+        </h1>
       </div>
 
       <div className="flex flex-col items-center px-4 pt-5 pb-4">
-        <div className="w-20 h-20 rounded-full overflow-hidden bg-gray-200 mb-3">
+        {/* Profile Image with Status Indicator */}
+        <div className="w-20 h-20 rounded-full overflow-hidden bg-gray-200 mb-3 relative">
           <img src="https://via.placeholder.com/80" alt="Provider" />
+          <div
+            className={`absolute bottom-0 right-0 w-5 h-5 ${statusInfo.color} rounded-full border-2 border-white`}
+          ></div>
         </div>
+
         <h1 className="text-xl font-bold">Ethan Carter</h1>
         <p className="text-gray-500 text-sm">Professional Plumber</p>
 
-        <button 
-          className="mt-3 px-4 py-1.5 border border-black rounded-full text-sm"
-          onClick={() => navigate('/provider/availability')}
+        {/* Availability status text */}
+        <div
+          className="flex items-center mt-2 mb-2"
+          onClick={toggleAvailabilityStatus}
         >
-          Update Availability
+          <div
+            className={`w-2 h-2 rounded-full ${statusInfo.color} mr-1.5`}
+          ></div>
+          <p className={`text-sm ${statusInfo.textColor} font-medium`}>
+            {statusInfo.text}
+          </p>
+        </div>
+
+        {/* Show availability range if scheduled */}
+        {availabilityStatus === "scheduled" && (
+          <div className="mt-1 mb-2">
+            <p className="text-sm font-semibold text-gray-700 text-center">
+              <span className="font-semibold">From:</span>{" "}
+              {availabilityRange.from}{" "}
+              <span className="font-semibold">To:</span> {availabilityRange.to}
+            </p>
+          </div>
+        )}
+
+        <button
+          className="mt-3 px-4 py-1.5 border border-black rounded-full text-sm text-white bg-black"
+          onClick={() => navigate("/provider/profile/profile_edit")}
+        >
+          Update Profile
+        </button>
+
+        <button
+          className="mt-3 px-4 py-1.5 border border-black rounded-full text-sm text-white bg-black"
+          onClick={() => navigate("/provider/profile/availability")}
+        >
+          Update Aveliability
         </button>
       </div>
 

@@ -345,7 +345,7 @@ const ProviderAvailability = () => {
       </div>
 
       {/* Save Button */}
-      <div className="p-4">
+      <div className="p-4 pb-24">
         <button
           onClick={handleSave}
           className="bg-black text-white w-full py-3 rounded-full font-medium"
