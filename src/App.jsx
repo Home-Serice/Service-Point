@@ -1,16 +1,30 @@
 import Home from './pages/home' 
+import ProviderInfo from './pages/provider_info'  // Add this import
 import BottomNavbar from './components/bottom_navbar'
+import ProviderLoginPage from './pages/provider_login_page'
+import ProviderProfile from "./pages/provider_profile" 
+import ProviderAvailability from "./pages/provider_availability"
 import './App.css'
-import { BrowserRouter as Router } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 function App() {
   return (
     <Router>
       <div className="app-container">
-        <Home />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/provider_info/:id" element={<ProviderInfo />} />
+          <Route path="/profile" element={<ProviderInfo />} />
+          <Route path="/search" element={<Home />} />
+          <Route path="/bookings" element={<Home />} />
+          <Route path="/provider/login" element={<ProviderLoginPage />} />
+          <Route path="/provider/profile" element={<ProviderProfile />} />
+          <Route path="/provider/availability" element={<ProviderAvailability />}/>
+        </Routes>
+        <BottomNavbar />
       </div>
     </Router>
-  )
+  );
 }
 
-export default App
+export default App;

@@ -4,13 +4,18 @@ import SearchBar from "../components/search_bar";
 import Card from "../components/card";
 import BottomNavbar from "../components/bottom_navbar";
 
-// Sample service data
+
+
+
+
+
+
 const services = [
   {
     id: 1,
     title: "House Cleaning",
     description: "Professional home cleaning",
-    image: "src/assets/house_cleaning.svg", // Update with your actual image paths
+    image: "src/assets/house_cleaning.svg", 
   },
 
   {
@@ -51,7 +56,7 @@ const Home = () => {
             title={service.title}
             description={service.description}
             image={service.image}
-            onClick={() => console.log(`Selected service: ${service.title}`)}
+            onClick={() => navigate_to({id: service.id})}
           />
         ))}
       </div>
